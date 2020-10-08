@@ -1,5 +1,7 @@
 create database nanoway
+
 use nanoway
+
 create table turler(
 id int identity(1,1) not null, 
 ad nvarchar(20),
