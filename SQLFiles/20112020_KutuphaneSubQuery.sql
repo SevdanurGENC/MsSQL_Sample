@@ -50,31 +50,19 @@ and tur.turadi in ('Hikaye','Fıkra')
 
 --ROMAN türünde  ve ortalama sayfa sayısından büyük olan kitapları listeleyen sorguyu yazınız.
 
-SELECT
-    *
-FROM
-    kitap
-WHERE
-    sayfasayisi >    (
-                SELECT AVG(sayfasayisi) 
-                FROM kitap 
-                WHERE 
-                    turno =(
-                            SELECT
-                                turno
-                            FROM
-                                tur
-                            WHERE turadi='ROMAN'
-                    )
-                )
+SELECT *
+FROM kitap
+WHERE sayfasayisi >    (
+      SELECT AVG(sayfasayisi) 
+      FROM kitap 
+      WHERE turno =(
+		SELECT turno
+        FROM tur
+        WHERE turadi='ROMAN') )
         AND
-        turno=(
-            SELECT
-                turno
-            FROM
-                tur
-            WHERE turadi='ROMAN'
-        )
+        turno=(SELECT turno
+            FROM tur
+            WHERE turadi='ROMAN' )
 
 
 --Tür numarası 3 olan kitaplardan en büyük sayfasayından büyük olan kitapları listeler.
