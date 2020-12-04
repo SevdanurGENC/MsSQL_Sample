@@ -1,6 +1,6 @@
-﻿create database viewDenemeDb;
-use viewDenemeDb
- 
+create database viewDeneme
+use viewDeneme
+
 create table TblSehir
 (
 ID int identity(1,1) primary key,
@@ -17,7 +17,7 @@ ID int identity(1,1) primary key,
 Ad Varchar(20),
 Soyad varchar(20),
 SehirID int references TblSehir(ID),
-CınsiyetID int references TblCinsiyet(ID)
+CinsiyetID int references TblCinsiyet(ID)
 )
 
 
@@ -36,38 +36,44 @@ INSERT INTO TBLOGRENCI VALUES ('MEHMET','OKÇU',1,1)
 select * from TblCinsiyet
 select * from TblOgrenci
 select * from TblSehir
- 
-CREATE VIEW OGRENCIGETIR
-AS
-SELECT TBLOGRENCI.ID, TBLOGRENCI.AD,TBLOGRENCI.SOYAD, TBLCINSIYET.CINSIYET,
-TBLSEHIR.SEHIR
-FROM TBLOGRENCI
-JOIN TBLSEHIR ON TBLSEHIR.ID=TBLOGRENCI.SehirID
-JOIN TBLCINSIYET ON TBLCINSIYET.ID=TBLOGRENCI.CınsiyetID
 
-select * from OGRENCIGETIR
+--uc tablolu view sorgusu
+create view ogrenciBilgileriniGetir
+As
+select TblOgrenci.ID, TblOgrenci.Ad, TblOgrenci.Soyad, TblCinsiyet.Cinsiyet, TblSehir.Sehir
+from TblOgrenci
+join TblSehir on TblSehir.ID = TblOgrenci.SehirID
+join TblCinsiyet on TblCinsiyet.ID = TblOgrenci.CinsiyetID
 
-insert into OGRENCIGETIR (id, Ad, Soyad, Cinsiyet, Sehir)
-values (6, 'Sevdanur', 'GENC', 'KADIN', 'BALIKESIR')
+select * from ogrenciBilgileriniGetir
 
-delete from OGRENCIGETIR
+insert into ogrenciBilgileriniGetir(ID, Ad, Soyad, Cinsiyet, Sehir)
+values (7, 'Sevdanur', 'GENC', 'KADIN', 'BALIKESIR')
+
+delete from ogrenciBilgileriniGetir
 where id = 5
 
-drop view OGRENCIGETIR
+drop view ogrenciBilgileriniGetir
+ 
 
-CREATE VIEW OGRENCITBLGETIR
-AS
-SELECT TBLOGRENCI.ID, TBLOGRENCI.AD,TBLOGRENCI.SOYAD 
-FROM TBLOGRENCI
+--tek tablolu view sorgusu
+create view ogrenciTblGetir
+as
+select id, ad, soyad
+from TblOgrenci
 
-select * from OGRENCITBLGETIR
-where id = 3
+select * from ogrenciTblGetir
 
-delete from OGRENCITBLGETIR 
-where id = 3
+insert into ogrenciTblGetir(ad, Soyad)
+values ('Sevdanur', 'GENC')
 
 select * from TblOgrenci
 
-insert into OGRENCITBLGETIR(ad, soyad)
-values('Sevdanur', 'GENC')
+delete from ogrenciTblGetir
+where id = 6
 
+select * from ogrenciTblGetir
+
+select * from TblOgrenci
+
+drop view ogrenciTblGetir
